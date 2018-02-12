@@ -1,0 +1,49 @@
+{
+  "name": "acfbentveld/Parser",
+  "description": "A package to replace words in a text with values from a array. Also supports aliases and excluded properties",
+  "keywords": [
+    "acfbentveld",
+    "Parser"
+  ],
+  "homepage": "https://github.com/ACFBentveld/Parser",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ACF Bentveld",
+      "email": "info@acfbentveld.nl",
+      "homepage": "https://ACFBentveld.nl",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ACFBentveld\\Parser\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ACFBentveld\\Parser\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [],
+      "aliases": {
+        "Parser": "ACFBentveld\\Parser\\ParserFacade"
+      }
+    }
+  }
+}
