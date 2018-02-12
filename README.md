@@ -1,4 +1,4 @@
-# Very short description of the package
+# Easy text parser
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/acfbentveld/parser.svg?style=flat-square)](https://packagist.org/packages/acfbentveld/Parser)
 [![Total Downloads](https://img.shields.io/packagist/dt/acfbentveld/parser.svg?style=flat-square)](https://packagist.org/packages/acfbentveld/Parser)
