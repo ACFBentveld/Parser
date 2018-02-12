@@ -1,5 +1,5 @@
 {
-  "name": "acfbentveld/Parser",
+  "name": "acfbentveld/parser",
   "description": "A package to replace words in a text with values from a array. Also supports aliases and excluded properties",
   "keywords": [
     "acfbentveld",
