@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/acfbentveld/parser.svg?style=flat-square)](https://packagist.org/packages/acfbentveld/Parser)
 
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+A package to replace words in a text with values from a array. Also supports aliases and excluded properties.
 
 ## Installation
 
