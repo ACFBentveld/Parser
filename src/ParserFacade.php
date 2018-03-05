@@ -16,6 +16,6 @@ class ParserFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'parser';
+        return 'Parser';
     }
 }
