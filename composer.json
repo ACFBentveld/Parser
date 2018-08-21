@@ -1,10 +1,11 @@
 {
-  "name": "acfbentveld/Parser",
+  "name": "acfbentveld/parser",
   "description": "A package to replace words in a text with values from a array. Also supports aliases and excluded properties",
   "keywords": [
     "acfbentveld",
     "Parser"
   ],
+  "version": "1.0.1",
   "homepage": "https://github.com/ACFBentveld/Parser",
   "license": "MIT",
   "authors": [
