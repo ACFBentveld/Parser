@@ -29,7 +29,7 @@ class Parser
      *
      * @return \ACFBentveld\Parser\Parser
      */
-    public static function text(string $text)
+    public static function text(?string $text)
     {
         $parser = new self;
         $parser->text = $text;
