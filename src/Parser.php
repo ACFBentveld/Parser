@@ -7,22 +7,35 @@ use Closure;
 
 class Parser
 {
-
+    /**
+     * @var string text that should be parsed
+     */
     protected $text    = "";
-    protected $values  = [];
-    protected $tags    = ["[", "]"];
-    protected $exclude = [];
-    protected $aliases = [];
-    protected $result  = "";
-
 
     /**
-     * Create a new Skeleton Instance.
+     * @var array values that should be replaced
      */
-    public function __construct()
-    {
-        // constructor body
-    }
+    protected $values  = [];
+
+    /**
+     * @var array tags that indicate a value that should be parsed
+     */
+    protected $tags    = ["[", "]"];
+
+    /**
+     * @var array items to exclude
+     */
+    protected $exclude = [];
+
+    /**
+     * @var array aliases for values
+     */
+    protected $aliases = [];
+
+    /**
+     * @var string parsed result
+     */
+    protected $result  = "";
 
 
     /**
@@ -86,7 +99,6 @@ class Parser
      * Get all the keys that need to be replaced
      *
      * @return mixed
-     * @author Amando Vledder <amando@acfbentveld.nl>
      */
     private function getKeys()
     {
