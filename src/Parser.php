@@ -2,6 +2,9 @@
 
 namespace ACFBentveld\Parser;
 
+use ArrayAccess;
+use Closure;
+
 class Parser
 {
 
@@ -47,15 +50,13 @@ class Parser
     {
         $this->validate();
         $this->result = $this->text;
-        $aliases = $this->mapAliases();
 
+        $keys = $this->getKeys();
+        $aliases = $this->mapAliases();
         $values = array_merge($aliases, $this->values);
 
-        foreach ($values as $key => $value) {
-
-            if ($value instanceof \Closure) {
-                $value = $value();
-            }
+        foreach ($keys as $key) {
+            $value = $this->getValue($values, $key);
 
             if (!$this->isValidValue($value) || in_array($key, $this->exclude)) {
                 continue;
@@ -63,7 +64,6 @@ class Parser
 
             $this->result = str_replace($this->tags[0] . $key . $this->tags[1], $value, $this->result);
         }
-
         return $this->result;
     }
 
@@ -79,6 +79,21 @@ class Parser
         if (count($this->tags) != 2) {
             throw InvalidTagsException::missingTags($this->tags);
         }
+    }
+
+
+    /**
+     * Get all the keys that need to be replaced
+     *
+     * @return mixed
+     * @author Amando Vledder <amando@acfbentveld.nl>
+     */
+    private function getKeys()
+    {
+        $openTag = $this->tags[0];
+        $closeTag = $this->tags[1];
+        preg_match_all("/\\$openTag(.*?)\\$closeTag/", $this->text, $matches);
+        return $matches[1];
     }
 
 
@@ -99,6 +114,41 @@ class Parser
             $aliases[$alias] = $this->values[$key];
         }
         return $aliases;
+    }
+
+
+    /**
+     * Get an item from an array or object using "dot" notation.
+     *
+     * @param  mixed  $target
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    private function getValue($target, $key)
+    {
+        if (is_null($key)) return $target;
+        foreach (explode('.', $key) as $segment) {
+            if (is_array($target)) {
+                if (!array_key_exists($segment, $target)) {
+                    return null;
+                }
+                $target = $target[$segment];
+            } elseif ($target instanceof ArrayAccess) {
+                if (!isset($target[$segment])) {
+                    return null;
+                }
+                $target = $target[$segment];
+            } elseif (is_object($target)) {
+                if (!isset($target->{$segment})) {
+                    return null;
+                }
+                $target = $target->{$segment};
+            } else {
+                return null;
+            }
+        }
+        return $target instanceof Closure ? $target() : $target;
     }
 
 

@@ -184,23 +184,6 @@ class ParserTest extends TestCase
 
 
     /** @test */
-    public function it_parses_weird_names()
-    {
-        $values = [
-            '[]' => 'Foobar'
-        ];
-
-        $input = "[[]]";
-
-        $expected = "Foobar";
-
-        $result = Parser::text($input)->values($values)->parse();
-
-        $this->assertEquals($expected, $result);
-    }
-
-
-    /** @test */
     public function it_doesnt_loop()
     {
         $values = [
@@ -210,6 +193,29 @@ class ParserTest extends TestCase
         $input = "[name]";
 
         $expected = "[name]";
+
+        $result = Parser::text($input)->values($values)->parse();
+
+        $this->assertEquals($expected, $result);
+    }
+
+
+    /** @test */
+    public function it_parses_nested_array_values()
+    {
+        $values = [
+            'user' => [
+                'name'  => [
+                    'first_name' => 'Foo',
+                    'last_name'  => 'Bar'
+                ],
+                'email' => 'example@example.com'
+            ]
+        ];
+
+        $input = "[user.name.first_name][user.name.last_name] - [user.email]";
+
+        $expected = "FooBar - example@example.com";
 
         $result = Parser::text($input)->values($values)->parse();
 
