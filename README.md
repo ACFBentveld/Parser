@@ -27,6 +27,27 @@ Parser::text('Hello [what]')->values(['who' => 'world'])->aliases(['what' => 'wh
 ```
 
 
+### Using arrays as values
+
+```php
+$values = [
+    'user' => [
+        'name' => [
+            'first_name' => 'Foo',
+            'last_name' => 'Bar'
+        ],
+        'email' => 'example@example.com'
+    ]
+];
+
+$input = "[user.name.first_name][user.name.last_name] - [user.email]";
+
+$result = Parser::text($input)->values($values)->parse();
+```
+
+will generate `FooBar - example@example.com`
+
+
 ## Available methods
 
 All methods can be chained together like `text()->values()->aliases()` and can be in any order.
