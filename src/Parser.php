@@ -91,6 +91,8 @@ class Parser
     {
         if (count($this->tags) != 2) {
             throw InvalidTagsException::missingTags($this->tags);
+        } elseif (empty($this->tags[0]) || empty($this->tags[1])) {
+            $this->tags = ['[', ']'];
         }
     }
 
@@ -104,7 +106,7 @@ class Parser
     {
         $openTag = $this->tags[0];
         $closeTag = $this->tags[1];
-        preg_match_all("/\\$openTag(.*?)\\$closeTag/", $this->text, $matches);
+        preg_match_all('/\\' . $openTag . '(.*?)\\' . $closeTag . '/', $this->text, $matches);
         return $matches[1];
     }
 

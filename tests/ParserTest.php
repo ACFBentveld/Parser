@@ -9,9 +9,37 @@ use PHPUnit\Framework\TestCase;
 class ParserTest extends TestCase
 {
     /** @test */
-    public function true_is_true()
+    public function it_allows_null()
     {
-        $this->assertTrue(true);
+        $values = [
+            'first_name' => 'Foo',
+            'last_name'  => 'bar'
+        ];
+
+        $input = null;
+
+        $expected = null;
+
+        $result = Parser::text($input)->values($values)->parse();
+
+        $this->assertEquals($expected, $result);
+    }
+
+
+    /** @test */
+    public function it_sets_default_tags()
+    {
+        $values = [
+            'name' => 'Foobar'
+        ];
+
+        $input = "Name is: %name% [name]";
+
+        $expected = "Name is: %name% Foobar";
+
+        $result = Parser::text($input)->values($values)->tags(['', ''])->parse();
+
+        $this->assertEquals($expected, $result);
     }
 
 
