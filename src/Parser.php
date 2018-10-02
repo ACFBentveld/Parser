@@ -10,17 +10,17 @@ class Parser
     /**
      * @var string text that should be parsed
      */
-    protected $text    = "";
+    protected $text = '';
 
     /**
      * @var array values that should be replaced
      */
-    protected $values  = [];
+    protected $values = [];
 
     /**
      * @var array tags that indicate a value that should be parsed
      */
-    protected $tags    = ["[", "]"];
+    protected $tags = ['[', ']'];
 
     /**
      * @var array items to exclude
@@ -35,11 +35,10 @@ class Parser
     /**
      * @var string parsed result
      */
-    protected $result  = "";
-
+    protected $result = '';
 
     /**
-     * Sets the text for the parser. Also the starting point. `Parser::text()`
+     * Sets the text for the parser. Also the starting point. `Parser::text()`.
      *
      * @param string $text - text to set
      *
@@ -47,15 +46,14 @@ class Parser
      */
     public static function text(?string $text)
     {
-        $parser = new self;
+        $parser = new self();
         $parser->text = $text;
 
         return $parser;
     }
 
-
     /**
-     * Parses the text
+     * Parses the text.
      *
      * @return string
      */
@@ -75,15 +73,15 @@ class Parser
                 continue;
             }
 
-            $this->result = str_replace($this->tags[0] . $key . $this->tags[1], $value, $this->result);
+            $this->result = str_replace($this->tags[0].$key.$this->tags[1], $value, $this->result);
         }
+
         return $this->result;
     }
 
-
     /**
      * Validates the parser input
-     * Currently only used to detect missing tags
+     * Currently only used to detect missing tags.
      *
      * @throws \ACFBentveld\Parser\InvalidTagsException
      */
@@ -96,9 +94,8 @@ class Parser
         }
     }
 
-
     /**
-     * Get all the keys that need to be replaced
+     * Get all the keys that need to be replaced.
      *
      * @return mixed
      */
@@ -106,13 +103,13 @@ class Parser
     {
         $openTag = $this->tags[0];
         $closeTag = $this->tags[1];
-        preg_match_all('/\\' . $openTag . '(.*?)\\' . $closeTag . '/', $this->text, $matches);
+        preg_match_all('/\\'.$openTag.'(.*?)\\'.$closeTag.'/', $this->text, $matches);
+
         return $matches[1];
     }
 
-
     /**
-     * Maps the aliases with a value
+     * Maps the aliases with a value.
      *
      * @return array
      */
@@ -127,47 +124,49 @@ class Parser
 
             $aliases[$alias] = $this->values[$key];
         }
+
         return $aliases;
     }
-
 
     /**
      * Get an item from an array or object using "dot" notation.
      *
-     * @param  mixed  $target
-     * @param  string $key
+     * @param mixed  $target
+     * @param string $key
      *
      * @return mixed
      */
     private function getValue($target, $key)
     {
-        if (is_null($key)) return $target;
+        if (is_null($key)) {
+            return $target;
+        }
         foreach (explode('.', $key) as $segment) {
             if (is_array($target)) {
                 if (!array_key_exists($segment, $target)) {
-                    return null;
+                    return;
                 }
                 $target = $target[$segment];
             } elseif ($target instanceof ArrayAccess) {
                 if (!isset($target[$segment])) {
-                    return null;
+                    return;
                 }
                 $target = $target[$segment];
             } elseif (is_object($target)) {
                 if (!isset($target->{$segment})) {
-                    return null;
+                    return;
                 }
                 $target = $target->{$segment};
             } else {
-                return null;
+                return;
             }
         }
+
         return $target instanceof Closure ? $target() : $target;
     }
 
-
     /**
-     * Checks if the given value is a valid type for the parser
+     * Checks if the given value is a valid type for the parser.
      *
      * @param $value
      *
@@ -175,12 +174,11 @@ class Parser
      */
     private function isValidValue($value)
     {
-        return (is_string($value) || is_numeric($value) || is_bool($value));
+        return is_string($value) || is_numeric($value) || is_bool($value);
     }
 
-
     /**
-     * Sets the values
+     * Sets the values.
      *
      * @param array $values - values to set
      *
@@ -189,12 +187,12 @@ class Parser
     public function values(array $values)
     {
         $this->values = $values;
+
         return $this;
     }
 
-
     /**
-     * Sets the tags
+     * Sets the tags.
      *
      * @param array $tags - tags to set
      *
@@ -203,12 +201,12 @@ class Parser
     public function tags(array $tags)
     {
         $this->tags = $tags;
+
         return $this;
     }
 
-
     /**
-     * Sets the exclude
+     * Sets the exclude.
      *
      * @param array $exclude - values to exclude
      *
@@ -217,12 +215,12 @@ class Parser
     public function exclude(array $exclude)
     {
         $this->exclude = $exclude;
+
         return $this;
     }
 
-
     /**
-     * Sets the aliases
+     * Sets the aliases.
      *
      * @param array $aliases
      *
@@ -231,6 +229,7 @@ class Parser
     public function aliases(array $aliases)
     {
         $this->aliases = $aliases;
+
         return $this;
     }
 }
