@@ -2,7 +2,8 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/acfbentveld/parser.svg?style=flat-square)](https://packagist.org/packages/acfbentveld/Parser)
 [![Total Downloads](https://img.shields.io/packagist/dt/acfbentveld/parser.svg?style=flat-square)](https://packagist.org/packages/acfbentveld/Parser)
-
+[![Build Status](https://img.shields.io/travis/ACFBentveld/Parser/master.svg?style=flat-square)](https://travis-ci.org/ACFBentveld/PDF)
+[![StyleCI](https://github.styleci.io/repos/121260120/shield?branch=add-ci)](https://github.styleci.io/repos/121260120)
 
 A package to replace words in a text with values from a array. Also supports aliases and excluded properties.
 
